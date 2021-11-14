@@ -60,7 +60,7 @@ function delay(time) {
 class Squidward {
     constructor() {
         loader.load(
-           '../models/squidaward/scene.gltf'
+           '/models/squidaward/scene.gltf'
            , function (gltf) {
                scene.add( gltf.scene );
                gltf.scene.scale.set(.4, .4, .4);
@@ -74,7 +74,7 @@ class Squidward {
 class Doll {
     constructor() {
         loader.load(
-            '../models/squid_game/scene.gltf'
+            '/models/squid_game/scene.gltf'
            , (gltf) => {
                scene.add( gltf.scene );
                gltf.scene.scale.set(.4, .4, .4);
