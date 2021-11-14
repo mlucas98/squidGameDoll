@@ -45,18 +45,18 @@ function delay(time) {
 }
 
 
-class Squidward {
-    constructor() {
-        loader.load(
-           '../models/squidaward/scene.gltf'
-           , function (gltf) {
-               scene.add( gltf.scene );
-               gltf.scene.scale.set(.4, .4, .4);
-               gltf.scene.position.set(0, -1, 0);
-           }
-       )
-    }
-}
+// class Squidward {
+//     constructor() {
+//         loader.load(
+//            '../models/squidaward/scene.gltf'
+//            , function (gltf) {
+//                scene.add( gltf.scene );
+//                gltf.scene.scale.set(.4, .4, .4);
+//                gltf.scene.position.set(0, -1, 0);
+//            }
+//        )
+//     }
+// }
 
 
 class Doll {
@@ -154,7 +154,7 @@ const player = new Player;
 let doll = new Doll;
 
 async function init(){
-    await delay(1000);
+    await delay(3000);
     text.innerText = 'Starting in 3';
     await delay(1000);
     text.innerText = 'Starting in 2';
