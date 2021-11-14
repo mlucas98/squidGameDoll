@@ -62,7 +62,7 @@ function delay(time) {
 class Doll {
     constructor() {
         loader.load(
-            '../models/squid_game/scene.gltf'
+            'models/squid_game/scene.gltf'
            , (gltf) => {
                scene.add( gltf.scene );
                gltf.scene.scale.set(.4, .4, .4);
