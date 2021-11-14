@@ -21,7 +21,6 @@ let isLookingBackward = true;
 
 
 
-
 // EXAMPLE CUBE -- Create geometry (box), material (just color) and finally the mesh (cube)
 // Add the cube to the scene
 
@@ -39,17 +38,6 @@ function createCube( size, positionX, rotationY, color = 0xfbc851 ){
 camera.position.z = 5;
 const loader = new THREE.GLTFLoader();  // Add THREE since it's laoded locally
 
-
-// The wall we aim to reach
-function createTrack() {
-    // back wall
-    createCube( {w: start_position * 2 + .2, y: 1.5, d: 1}, 0, 0, 0xe5a716 ).position.z = -0.7;
-    // sides
-    createCube( {w: .2, y: 1.5, d: 1}, start_position, -.35 );
-    createCube( {w: .2, y: 1.5, d: 1}, end_position, .35 );
-}
-
-
 // It returns a promise that will resolve after the given time
 // La promesa se cumple pero para resolverse y devolver algo tiene que esperar el timeout que se le pasa
 function delay(time) {
@@ -60,7 +48,7 @@ function delay(time) {
 class Squidward {
     constructor() {
         loader.load(
-           'models/squidaward/scene.gltf'
+           '../models/squidaward/scene.gltf'
            , function (gltf) {
                scene.add( gltf.scene );
                gltf.scene.scale.set(.4, .4, .4);
@@ -74,7 +62,7 @@ class Squidward {
 class Doll {
     constructor() {
         loader.load(
-            'models/squid_game/scene.gltf'
+            '../models/squid_game/scene.gltf'
            , (gltf) => {
                scene.add( gltf.scene );
                gltf.scene.scale.set(.4, .4, .4);
@@ -108,7 +96,16 @@ class Doll {
     }
 }
 
-let doll = new Doll;
+// The wall we aim to reach
+function createTrack() {
+    // back wall
+    createCube( {w: start_position * 2 + .2, y: 1.5, d: 1}, 0, 0, 0xe5a716 ).position.z = -1;
+    // sides
+    createCube( {w: .2, y: 1.5, d: 1}, start_position, -.35 );
+    createCube( {w: .2, y: 1.5, d: 1}, end_position, .35 );
+}
+
+createTrack();
 
 class Player {
     constructor () {
@@ -126,7 +123,7 @@ class Player {
     }
     
     run() {
-        this.playerInfo.velocity = -0.05;
+        this.playerInfo.velocity = -0.2;
     }
     stop() {
         // animate to make it interesting (?)
@@ -134,11 +131,11 @@ class Player {
     }
     
     check() {
-        if(this.playerInfo.velocity < 0 && !isLookingBackward){
+        if(this.playerInfo.velocity > 0 && !isLookingBackward){
             text.innerText = 'You loose';
             gameStat = 'over';
         }
-        if(this.playerInfo.positionX < end_position + .4) {
+        if(this.playerInfo.position < end_position + .4) {
             text.innerText = 'You win!';
             gameStat = 'over';
         }
@@ -152,8 +149,9 @@ class Player {
         this.player.position.x = this.playerInfo.positionX;
     }
 }
-const player = new Player;
 
+const player = new Player;
+let doll = new Doll;
 
 async function init(){
     await delay(1000);
@@ -181,6 +179,8 @@ function startGame(){
     }, timeLimit * 1000) // multiply because of miliseconds
 }
 
+init();
+
 
 // Render
 function animate() {
@@ -192,11 +192,16 @@ function animate() {
     player.update();
 }
 
-createTrack();
-
-init();
-
 animate();
+
+// Make it responsive
+window.addEventListener('resize', onWindowResize, false);
+
+function onWindowResize () {
+    camera.aspect = ( window.innerWidth /  window.innerHeight );
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+}
 
 // Move Player
 window.addEventListener('keydown', (e) => {
@@ -212,12 +217,3 @@ window.addEventListener('keyup', (e) => {
         player.stop();
     }
 })
-
-// Make it responsive
-window.addEventListener('resize', onWindowResize, false);
-
-function onWindowResize () {
-    camera.aspect = ( window.innerWidth /  window.innerHeight );
-    camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-}
