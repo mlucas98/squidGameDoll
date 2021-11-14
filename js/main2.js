@@ -123,7 +123,7 @@ class Player {
     }
     
     run() {
-        this.playerInfo.velocity = -0.2;
+        this.playerInfo.velocity = -0.05;
     }
     stop() {
         // animate to make it interesting (?)
@@ -131,11 +131,11 @@ class Player {
     }
     
     check() {
-        if(this.playerInfo.velocity > 0 && !isLookingBackward){
+        if(this.playerInfo.velocity < 0 && isLookingBackward == false){
             text.innerText = 'You loose';
             gameStat = 'over';
         }
-        if(this.playerInfo.position < end_position + .4) {
+        if(this.playerInfo.positionX < end_position + .4) {
             text.innerText = 'You win!';
             gameStat = 'over';
         }
@@ -167,7 +167,7 @@ async function init(){
 
 function startGame(){
     gameStat = 'started';
-    let progressBar = createCube({w: 5, h: .1, d:1}, 0);
+    let progressBar = createCube({w: 5, h: .1, d:1}, 0, 0);
     progressBar.position.y = 3.35;
     gsap.to(progressBar.scale, {x: 0, duration: timeLimit, ease: 'none'});
     doll.start();
