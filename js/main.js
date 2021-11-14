@@ -108,6 +108,7 @@ class Doll {
     }
 }
 
+let doll = new Doll;
 
 class Player {
     constructor () {
@@ -151,6 +152,7 @@ class Player {
         this.player.position.x = this.playerInfo.positionX;
     }
 }
+const player = new Player;
 
 
 async function init(){
@@ -191,9 +193,6 @@ function animate() {
 }
 
 createTrack();
-
-const player = new Player;
-let doll = new Doll;
 
 init();
 
